@@ -1,3 +1,9 @@
+## 2.5.0 (9 JUL 2022)
+
+* feat: add ts declaration [#187](https://github.com/liriliri/eruda/pull/187)
+* refactor: use luna console
+* refactor: use chobitsu for highlighting element
+
 ## 2.4.1 (28 Sep 2020)
 
 * fix: remove arrow function [#160](https://github.com/liriliri/eruda/issues/160)

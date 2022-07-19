@@ -1,4 +1,3 @@
-// @ts-check
 const autoprefixer = require('autoprefixer')
 const prefixer = require('postcss-prefixer')
 const clean = require('postcss-clean')
@@ -12,30 +11,25 @@ const nodeModDir = path.resolve('./node_modules/') + '/'
 const srcDir = path.resolve('./src') + '/'
 const banner = pkg.name + ' v' + pkg.version + ' ' + pkg.homepage
 
-/** @type {webpack.RuleSetUseItem} */
 const postcssLoader = {
   loader: 'postcss-loader',
   options: {
-    postcssOptions: {
-      plugins: [
-        prefixer({
-          prefix: '_',
-          ignore: [/luna-console/, /luna-object-viewer/, /luna-notification/],
-        }),
-        autoprefixer(),
-        clean(),
-      ],
-    },
+    plugins: [
+      prefixer({
+        prefix: '_',
+        ignore: [/luna-console/, /luna-object-viewer/, /luna-notification/],
+      }),
+      autoprefixer,
+      clean(),
+    ],
   },
 }
 
-/** @type {webpack.RuleSetUseItem} */
 const cssMinifierLoader = {
   loader: path.resolve(__dirname, './loaders/css-minifier-loader'),
   options: {},
 }
 
-/** @type {webpack.Configuration} */
 module.exports = {
   entry: './src/index',
   resolve: {
@@ -43,16 +37,15 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: './test',
+      directory: path.join(__dirname, '../test'),
     },
-    port: 3000,
+    port: 8080,
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/assets/',
-    library: {
-      type: 'commonjs',
-    },
+    library: 'eruda',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
@@ -63,32 +56,23 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/preset-env', { modules: false }]],
+              presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-transform-runtime',
+                '@babel/plugin-proposal-class-properties',
+              ],
             },
           },
+          'eslint-loader',
         ],
       },
       {
         test: /\.scss$/,
-        use: [
-          cssMinifierLoader,
-          {
-            loader: 'css-loader',
-            options: {
-              exportType: 'string',
-            },
-          },
-          postcssLoader,
-          'sass-loader',
-        ],
+        use: [cssMinifierLoader, 'css-loader', postcssLoader, 'sass-loader'],
       },
       {
         test: /\.css$/,
-        use: [
-          cssMinifierLoader,
-          { loader: 'css-loader', options: { exportType: 'string' } },
-          postcssLoader,
-        ],
+        use: [cssMinifierLoader, 'css-loader', postcssLoader],
       },
       // https://github.com/wycats/handlebars.js/issues/1134
       {
@@ -124,11 +108,7 @@ module.exports = {
   plugins: [
     new webpack.BannerPlugin(banner),
     new webpack.DefinePlugin({
-      VERSION: `"${pkg.version}"`,
+      VERSION: '"' + pkg.version + '"',
     }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
-  experiments: {
-    outputModule: true,
-  },
 }
