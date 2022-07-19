@@ -43,15 +43,15 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: './test',
+      directory: path.join(__dirname, '../test'),
     },
-    port: 3000,
+    port: 8080,
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/assets/',
     library: {
-      type: 'commonjs',
+      type: 'module',
     },
   },
   module: {
@@ -63,7 +63,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/preset-env', { modules: false }]],
+              presets: ['@babel/preset-env'],
             },
           },
         ],
@@ -72,12 +72,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           cssMinifierLoader,
-          {
-            loader: 'css-loader',
-            options: {
-              exportType: 'string',
-            },
-          },
+          { loader: 'css-loader', options: { exportType: 'string' } },
           postcssLoader,
           'sass-loader',
         ],
@@ -126,7 +121,6 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: `"${pkg.version}"`,
     }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   experiments: {
     outputModule: true,

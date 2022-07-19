@@ -217,12 +217,15 @@ export default class DevTools extends Emitter {
     this._navBar.on('showTool', (name) => this.showTool(name))
   }
   _initNotification() {
-    this._notification = new LunaNotification(this._$el.get(0), {
-      position: {
-        x: 'center',
-        y: 'top',
-      },
-    })
+    this._notification = new LunaNotification(
+      this._$el.find('.eruda-notification').get(0),
+      {
+        position: {
+          x: 'center',
+          y: 'top',
+        },
+      }
+    )
   }
   _bindEvent() {
     const $navBar = this._$el.find('.eruda-nav-bar')

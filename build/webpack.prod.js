@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin')
 
 exports = require('./webpack.base')
 
@@ -10,5 +11,15 @@ exports.plugins = exports.plugins.concat([
     ENV: '"production"',
   }),
 ])
+if (process.env.NODE_ENV === 'production') {
+  exports.optimization = {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      }),
+    ],
+  }
+}
 
 module.exports = exports
