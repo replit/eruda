@@ -1,4 +1,4 @@
-## 2.5.0 (9 JUL 2022)
+## 2.5.0 (9 Jul 2022)
 
 * feat: add ts declaration [#187](https://github.com/liriliri/eruda/pull/187)
 * refactor: use luna console
