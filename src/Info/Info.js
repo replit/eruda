@@ -2,15 +2,17 @@ import Tool from '../DevTools/Tool'
 import defInfo from './defInfo'
 import { each, isFn, isUndef, cloneDeep } from '../lib/util'
 import evalCss from '../lib/evalCss'
+import style from './Info.scss'
+import template from './Info.hbs'
 
 export default class Info extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Info.scss'))
+    this._style = evalCss(style)
 
     this.name = 'info'
-    this._tpl = require('./Info.hbs')
+    this._tpl = template
     this._infos = []
   }
   init($el) {

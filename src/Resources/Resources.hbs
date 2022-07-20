@@ -117,7 +117,7 @@
     {{#if scriptData}}
       {{#each scriptData}}
         <li>
-          <a href="{{this}}" target="_blank" {{{class 'js-link'}}}>{{this}}</a>
+          <a href="{{this}}" target="_blank" rel="noopener noreferrer" {{{class 'js-link'}}}>{{this}}</a>
         </li>
       {{/each}}
     {{else}}
@@ -136,7 +136,7 @@
     {{#if stylesheetData}}
       {{#each stylesheetData}}
         <li>
-          <a href="{{this}}" target="_blank" {{{class 'css-link'}}}>{{this}}</a>
+          <a href="{{this}}" target="_blank" rel="noopener noreferrer" {{{class 'css-link'}}}>{{this}}</a>
         </li>
       {{/each}}
     {{else}}
@@ -155,7 +155,7 @@
     {{#if iframeData}}
       {{#each iframeData}}
         <li>
-          <a href="{{this}}" target="_blank" {{{class 'iframe-link'}}}>{{this}}</a>
+          <a href="{{this}}" target="_blank" rel="noopener noreferrer" {{{class 'iframe-link'}}}>{{this}}</a>
         </li>
       {{/each}}
     {{else}}

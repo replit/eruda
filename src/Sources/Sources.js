@@ -1,15 +1,22 @@
 import Tool from '../DevTools/Tool'
-import beautify from 'js-beautify'
 import LunaObjectViewer from 'luna-object-viewer'
 import Settings from '../Settings/Settings'
 import { ajax, escape, trim, isStr, highlight } from '../lib/util'
 import evalCss from '../lib/evalCss'
 
+import style from './Sources.scss'
+
+import codeTpl from './code.hbs'
+import imgTpl from './image.hbs'
+import objTpl from './object.hbs'
+import rawTpl from './raw.hbs'
+import iframeTpl from './iframe.hbs'
+
 export default class Sources extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Sources.scss'))
+    this._style = evalCss(style)
 
     this.name = 'sources'
     this._showLineNum = true
@@ -108,11 +115,11 @@ export default class Sources extends Tool {
     })
   }
   _loadTpl() {
-    this._codeTpl = require('./code.hbs')
-    this._imgTpl = require('./image.hbs')
-    this._objTpl = require('./object.hbs')
-    this._rawTpl = require('./raw.hbs')
-    this._iframeTpl = require('./iframe.hbs')
+    this._codeTpl = codeTpl
+    this._imgTpl = imgTpl
+    this._objTpl = objTpl
+    this._rawTpl = rawTpl
+    this._iframeTpl = iframeTpl
   }
   _rmCfg() {
     const cfg = this.config
@@ -160,7 +167,7 @@ export default class Sources extends Tool {
       .select(cfg, 'indentSize', 'Indent Size', ['2', '4'])
       .separator()
   }
-  _render() {
+  async _render() {
     this._isInit = true
 
     const data = this._data
@@ -183,12 +190,14 @@ export default class Sources extends Tool {
   _renderImg() {
     this._renderHtml(this._imgTpl(this._data.val))
   }
-  _renderCode() {
+  async _renderCode() {
     const data = this._data
     const indent_size = this._indentSize
 
     let code = data.val
     const len = data.val.length
+
+    const beautify = await import(/* webpackIgnore: true */ 'js-beautify')
 
     // If source code too big, don't process it.
     if (len < MAX_BEAUTIFY_LEN && this._formatCode) {

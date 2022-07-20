@@ -14,6 +14,7 @@ import {
 import { safeStorage } from '../lib/fione'
 import { isErudaEl } from '../lib/extraUtil'
 import evalCss from '../lib/evalCss'
+import searchTextStyle from './searchText.scss'
 
 let style = null
 
@@ -184,7 +185,7 @@ export default [
   },
 ]
 
-evalCss(require('./searchText.scss'), document.head)
+evalCss(searchTextStyle, document.head)
 
 function search(text) {
   const root = document.body

@@ -17,6 +17,8 @@ import {
 } from '../lib/util'
 import evalCss from '../lib/evalCss'
 import LunaNotification from 'luna-notification'
+import style from './DevTools.scss'
+import template from './DevTools.hbs'
 
 export default class DevTools extends Emitter {
   constructor($container, { defaults = {} } = {}) {
@@ -31,7 +33,7 @@ export default class DevTools extends Emitter {
       defaults
     )
 
-    this._style = evalCss(require('./DevTools.scss'))
+    this._style = evalCss(style)
 
     this.$container = $container
     this._isShow = false
@@ -207,7 +209,7 @@ export default class DevTools extends Emitter {
   _appendTpl() {
     const $container = this.$container
 
-    $container.append(require('./DevTools.hbs')())
+    $container.append(template())
 
     this._$el = $container.find('.eruda-dev-tools')
     this._$tools = this._$el.find('.eruda-tools')

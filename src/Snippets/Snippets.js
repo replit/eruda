@@ -3,16 +3,19 @@ import defSnippets from './defSnippets'
 import { $, each } from '../lib/util'
 import evalCss from '../lib/evalCss'
 
+import style from './Snippets.scss'
+import template from './Snippets.hbs'
+
 export default class Snippets extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Snippets.scss'))
+    this._style = evalCss(style)
 
     this.name = 'snippets'
 
     this._snippets = []
-    this._tpl = require('./Snippets.hbs')
+    this._tpl = template
   }
   init($el) {
     super.init($el)

@@ -31,15 +31,18 @@ import {
 import { pxToNum } from '../lib/fione'
 import { isErudaEl } from '../lib/extraUtil'
 import evalCss from '../lib/evalCss'
+import style from './Elements.scss'
+import template from './Elements.hbs'
+import bottomTemplate from './BottomBar.hbs'
 
 export default class Elements extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Elements.scss'))
+    this._style = evalCss(style)
 
     this.name = 'elements'
-    this._tpl = require('./Elements.hbs')
+    this._tpl = template
     this._rmDefComputedStyle = true
     this._highlightElement = false
     this._selectElement = false
@@ -56,7 +59,7 @@ export default class Elements extends Tool {
 
     $el.html('<div class="eruda-show-area"></div>')
     this._$showArea = $el.find('.eruda-show-area')
-    $el.append(require('./BottomBar.hbs')())
+    $el.append(bottomTemplate())
 
     this._htmlEl = document.documentElement
     this._highlight = new Highlight(this._container.$container)
@@ -637,7 +640,8 @@ const getWinEventProto = () => {
   return safeGet(window, 'EventTarget.prototype') || window.Node.prototype
 }
 
-const wrapLink = (link) => `<a href="${link}" target="_blank">${link}</a>`
+const wrapLink = (link) =>
+  `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`
 
 function boxModelValue(val, type) {
   if (isNum(val)) return val

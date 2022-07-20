@@ -1,0 +1,62 @@
+diff --git a/node_modules/css-loader/dist/runtime/api.js b/node_modules/css-loader/dist/runtime/api.js
+index cdb89c5..d828dcd 100644
+--- a/node_modules/css-loader/dist/runtime/api.js
++++ b/node_modules/css-loader/dist/runtime/api.js
+@@ -4,7 +4,7 @@
+   MIT License http://www.opensource.org/licenses/mit-license.php
+   Author Tobias Koppers @sokra
+ */
+-module.exports = function (cssWithMappingToString) {
++export default function (cssWithMappingToString) {
+   var list = []; // return the list of modules as css string
+ 
+   list.toString = function toString() {
+diff --git a/node_modules/css-loader/dist/runtime/getUrl.js b/node_modules/css-loader/dist/runtime/getUrl.js
+index a299e9b..9fe5a8c 100644
+--- a/node_modules/css-loader/dist/runtime/getUrl.js
++++ b/node_modules/css-loader/dist/runtime/getUrl.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ 
+-module.exports = function (url, options) {
++export default function (url, options) {
+   if (!options) {
+     options = {};
+   }
+diff --git a/node_modules/css-loader/dist/runtime/noSourceMaps.js b/node_modules/css-loader/dist/runtime/noSourceMaps.js
+index 9e967aa..0042208 100644
+--- a/node_modules/css-loader/dist/runtime/noSourceMaps.js
++++ b/node_modules/css-loader/dist/runtime/noSourceMaps.js
+@@ -1,5 +1,5 @@
+ "use strict";
+ 
+-module.exports = function (i) {
++export default function (i) {
+   return i[1];
+ };
+\ No newline at end of file
+diff --git a/node_modules/css-loader/dist/runtime/sourceMaps.js b/node_modules/css-loader/dist/runtime/sourceMaps.js
+index fb96ae5..a47d0b1 100644
+--- a/node_modules/css-loader/dist/runtime/sourceMaps.js
++++ b/node_modules/css-loader/dist/runtime/sourceMaps.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ 
+-module.exports = function (item) {
++export default function (item) {
+   var content = item[1];
+   var cssMapping = item[3];
+ 
+diff --git a/node_modules/css-loader/dist/utils.js b/node_modules/css-loader/dist/utils.js
+index 4c81d60..c657aa0 100644
+--- a/node_modules/css-loader/dist/utils.js
++++ b/node_modules/css-loader/dist/utils.js
+@@ -978,7 +978,7 @@ function getModuleCode(result, api, replacements, options, loaderContext) {
+   // 5 - layer
+ 
+ 
+-  return `${beforeCode}// Module\n___CSS_LOADER_EXPORT___.push([module.id, ${code}, ""${sourceMapValue}]);\n`;
++  return `${beforeCode}// Module\n___CSS_LOADER_EXPORT___.push([__filename, ${code}, ""${sourceMapValue}]);\n`;
+ }
+ 
+ function dashesCamelCase(str) {

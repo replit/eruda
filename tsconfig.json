@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "noEmit": true,
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  }
+}

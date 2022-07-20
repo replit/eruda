@@ -1,0 +1,20 @@
+<span class="eruda-toggle-btn"></span>
+<span class="eruda-html-tag">{{!
+  }}&lt;{{!
+  }}<span class="eruda-tag-name">{{tagName}}</span>{{!
+  }}{{#each attributes}}
+    <span class="eruda-attribute">
+      <span class="eruda-attribute-name">{{name}}</span>{{#if value}}="<span class="eruda-attribute-value{{#if underline}} eruda-attribute-underline{{/if}}">{{value}}</span>"{{/if}}{{!
+    }}</span>{{!
+  }}{{/each}}{{!
+  }}&gt;{{!
+}}</span>{{!
+}}{{#if hasTail}}{{!
+}}{{#if text}}{{text}}{{else}}…{{/if}}{{!
+}}<span class="eruda-html-tag">{{!
+  }}&lt;{{!
+  }}<span class="eruda-tag-name">/{{tagName}}</span>{{!
+  }}&gt;{{!
+}}</span>
+{{/if}}
+<span class="eruda-selection"></span>

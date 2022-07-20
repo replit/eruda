@@ -3,18 +3,22 @@ import { isEmpty, $, ms, trim, each, last } from '../lib/util'
 import { getFileName } from '../lib/fione'
 import evalCss from '../lib/evalCss'
 import chobitsu from 'chobitsu'
+import style from './Network.scss'
+import template from './Network.hbs'
+import detail from './detail.hbs'
+import requests from './requests.hbs'
 
 export default class Network extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Network.scss'))
+    this._style = evalCss(style)
 
     this.name = 'network'
     this._requests = {}
-    this._tpl = require('./Network.hbs')
-    this._detailTpl = require('./detail.hbs')
-    this._requestsTpl = require('./requests.hbs')
+    this._tpl = template
+    this._detailTpl = detail
+    this._requestsTpl = requests
     this._detailData = {}
   }
   init($el, container) {

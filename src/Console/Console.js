@@ -1,4 +1,5 @@
 import Tool from '../DevTools/Tool'
+import { basename } from 'path'
 import {
   noop,
   $,
@@ -15,6 +16,8 @@ import evalCss from '../lib/evalCss'
 import emitter from '../lib/emitter'
 import Settings from '../Settings/Settings'
 import LunaConsole from 'luna-console'
+import style from './Console.scss'
+import template from './Console.hbs'
 
 uncaught.start()
 
@@ -104,7 +107,21 @@ export default class Console extends Tool {
     if (isHidden(this._$el.get(0))) return
     this._logger.renderViewport()
   }
-  _handleErr = (err) => {
+  /**
+   * @param {ErrorEvent} e
+   */
+  _handleErr = (err, e) => {
+    if (
+      err instanceof SyntaxError &&
+      err.stack &&
+      !err.stack.includes('\n    at ')
+    ) {
+      err.message += ` (at ${basename(e.filename) || e.filename}:${e.lineno}:${
+        e.colno
+      })`
+    }
+
+    Object.assign(globalThis, { eee: [err, e] })
     this._logger.error(err)
   }
   _enableJsExecution(enabled) {
@@ -131,8 +148,8 @@ export default class Console extends Tool {
   _appendTpl() {
     const $el = this._$el
 
-    this._style = evalCss(require('./Console.scss'))
-    $el.append(require('./Console.hbs')())
+    this._style = evalCss(style)
+    $el.append(template())
 
     const _$inputContainer = $el.find('.eruda-js-input')
     const _$input = _$inputContainer.find('textarea')

@@ -1,18 +1,24 @@
 import Tool from '../DevTools/Tool'
 import { $, LocalStore, uniqId, each, filter, isStr, clone } from '../lib/util'
 import evalCss from '../lib/evalCss'
+import style from './Settings.scss'
+
+import switchTpl from './switch.hbs'
+import selectTpl from './select.hbs'
+import rangeTpl from './range.hbs'
+import colorTpl from './color.hbs'
 
 export default class Settings extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Settings.scss'))
+    this._style = evalCss(style)
 
     this.name = 'settings'
-    this._switchTpl = require('./switch.hbs')
-    this._selectTpl = require('./select.hbs')
-    this._rangeTpl = require('./range.hbs')
-    this._colorTpl = require('./color.hbs')
+    this._switchTpl = switchTpl
+    this._selectTpl = selectTpl
+    this._rangeTpl = rangeTpl
+    this._colorTpl = colorTpl
     this._settings = []
   }
   init($el) {

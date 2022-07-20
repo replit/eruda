@@ -37,7 +37,7 @@ export default [
   {
     name: 'About',
     val:
-      '<a href="https://github.com/liriliri/eruda" target="_blank">Eruda v' +
+      '<a href="https://github.com/liriliri/eruda" target="_blank" rel="noopener noreferrer" >Eruda v' +
       VERSION +
       '</a>',
   },

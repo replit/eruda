@@ -1,0 +1,18 @@
+diff --git a/node_modules/handlebars-loader/index.js b/node_modules/handlebars-loader/index.js
+index b024668..f6b8b9f 100644
+--- a/node_modules/handlebars-loader/index.js
++++ b/node_modules/handlebars-loader/index.js
+@@ -374,10 +374,9 @@ module.exports = function(source) {
+ 
+       // export as module if template is not blank
+       var slug = template ?
+-        'var Handlebars = require(' + loaderUtils.stringifyRequest(loaderApi, runtimePath) + ');\n'
+-        + 'function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }\n'
+-        + 'module.exports = (Handlebars["default"] || Handlebars).template(' + template + ');' :
+-        'module.exports = function(){return "";};';
++        'import Handlebars from ' + loaderUtils.stringifyRequest(loaderApi, runtimePath) + ';\n'
++        + 'export default Handlebars.template(' + template + ');' :
++        'export default function(){return "";};';
+ 
+       loaderAsyncCallback(null, slug);
+     };

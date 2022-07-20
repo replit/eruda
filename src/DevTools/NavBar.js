@@ -1,11 +1,12 @@
 import { Emitter, $, isNum } from '../lib/util'
 import evalCss from '../lib/evalCss'
+import style from './NavBar.scss'
 
 export default class NavBar extends Emitter {
   constructor($el) {
     super()
 
-    this._style = evalCss(require('./NavBar.scss'))
+    this._style = evalCss(style)
 
     this._$el = $el.find('.eruda-nav-bar')
     this._$bottomBar = $el.find('.eruda-bottom-bar')

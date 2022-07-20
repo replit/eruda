@@ -1,6 +1,7 @@
 import EntryBtn from './EntryBtn/EntryBtn'
 import DevTools from './DevTools/DevTools'
 import Tool from './DevTools/Tool'
+import Dom from './Dom/Dom'
 import Console from './Console/Console'
 import Network from './Network/Network'
 import Elements from './Elements/Elements'
@@ -23,13 +24,26 @@ import {
   $,
   toArr,
   upperFirst,
-  nextTick
+  nextTick,
 } from './lib/util'
 import evalCss from './lib/evalCss'
 import chobitsu from 'chobitsu'
 
+import style from './style/style.scss'
+import resetStyle from './style/reset.scss'
+import iconStyle from './style/icon.css'
+import lunaConsoleStyle from 'luna-console/luna-console.css'
+import lunaObjectViewerStyle from 'luna-object-viewer/luna-object-viewer.css'
+import lunaNotificationStyle from 'luna-notification/luna-notification.css'
+
 export default {
-  init({ container, tool, autoScale = true, useShadowDom = true, defaults = {} } = {}) {
+  init({
+    container,
+    tool,
+    autoScale = true,
+    useShadowDom = true,
+    defaults = {},
+  } = {}) {
     if (this._isInit) return
 
     this._isInit = true
@@ -57,6 +71,7 @@ export default {
   Resources,
   Info,
   Snippets,
+  Dom,
   Settings,
   get(name) {
     if (!this._checkInit()) return
@@ -165,8 +180,8 @@ export default {
       if (shadowRoot) {
         // font-face doesn't work inside shadow dom.
         evalCss.container = document.head
-        evalCss(require('./style/icon.css') +
-        require('luna-console/luna-console.css') + require('luna-object-viewer/luna-object-viewer.css'))
+
+        evalCss([iconStyle, lunaConsoleStyle, lunaObjectViewerStyle])
 
         el = document.createElement('div')
         shadowRoot.appendChild(el)
@@ -177,7 +192,7 @@ export default {
     Object.assign(el, {
       id: 'eruda',
       className: 'eruda-container',
-      contentEditable: false
+      contentEditable: false,
     })
 
     // http://stackoverflow.com/questions/3885018/active-pseudo-class-doesnt-work-in-mobile-safari
@@ -187,7 +202,7 @@ export default {
   },
   _initDevTools(defaults) {
     this._devTools = new DevTools(this._$el, {
-      defaults
+      defaults,
     })
   },
   _initStyle() {
@@ -202,14 +217,14 @@ export default {
       evalCss.container = $el.find(`.${className}`).get(0)
     }
 
-    evalCss(
-      require('luna-object-viewer/luna-object-viewer.css') +
-      require('luna-console/luna-console.css') +
-      require('luna-notification/luna-notification.css') + 
-      require('./style/style.scss') +
-        require('./style/reset.scss') +
-        require('./style/icon.css')
-    )
+    evalCss([
+      lunaObjectViewerStyle,
+      lunaConsoleStyle,
+      lunaNotificationStyle,
+      style,
+      resetStyle,
+      iconStyle,
+    ])
   },
   _initEntryBtn() {
     this._entryBtn = new EntryBtn(this._$el)
@@ -232,14 +247,15 @@ export default {
       'resources',
       'sources',
       'info',
-      'snippets'
+      'snippets',
+      'dom',
     ]
   ) {
     tool = toArr(tool)
 
     const devTools = this._devTools
 
-    tool.forEach(name => {
+    tool.forEach((name) => {
       const Tool = this[upperFirst(name)]
       try {
         if (Tool) devTools.add(new Tool())
@@ -255,7 +271,7 @@ export default {
     })
 
     devTools.showTool(tool[0] || 'settings')
-  }
+  },
 }
 
 extraUtil(util)

@@ -1,0 +1,29 @@
+diff --git a/node_modules/licia-es/uncaught.js b/node_modules/licia-es/uncaught.js
+index 81883ea..740f8f1 100644
+--- a/node_modules/licia-es/uncaught.js
++++ b/node_modules/licia-es/uncaught.js
+@@ -18,20 +18,20 @@ SingleEmitter.mixin(exports);
+ 
+ if (isBrowser) {
+     window.addEventListener('error', event => {
+-        callListeners(event.error);
++        callListeners(event.error, event);
+     });
+     window.addEventListener('unhandledrejection', e => {
+-        callListeners(e.reason);
++        callListeners(e.reason, e);
+     });
+ } else {
+     process.on('uncaughtException', callListeners);
+     process.on('unhandledRejection', callListeners);
+ }
+ 
+-function callListeners(err) {
++function callListeners(...args) {
+     if (!isOn) return;
+ 
+-    exports.emit(err);
++    exports.emit(...args);
+ }
+ 
+ export default exports;

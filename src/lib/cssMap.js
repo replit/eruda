@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   background: 'b',
   'background-image': 'bi',
   border: 'bo',

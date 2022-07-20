@@ -1,4 +1,7 @@
 // @ts-check
+require('esm-hook')
+require('../src/lib/handlebars')
+
 const autoprefixer = require('autoprefixer')
 const prefixer = require('postcss-prefixer')
 const clean = require('postcss-clean')
@@ -30,6 +33,15 @@ const postcssLoader = {
 }
 
 /** @type {webpack.RuleSetUseItem} */
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    exportType: 'string',
+    esModule: true,
+  },
+}
+
+/** @type {webpack.RuleSetUseItem} */
 const cssMinifierLoader = {
   loader: path.resolve(__dirname, './loaders/css-minifier-loader'),
   options: {},
@@ -40,6 +52,12 @@ module.exports = {
   entry: './src/index',
   resolve: {
     symlinks: false,
+    alias: {
+      licia: path.dirname(require.resolve('licia-es/package.json')),
+    },
+    fallback: {
+      path: require.resolve('path-browserify'),
+    },
   },
   devServer: {
     static: {
@@ -54,7 +72,19 @@ module.exports = {
       type: 'module',
     },
   },
+  stats: {
+    modulesSpace: Infinity,
+    optimizationBailout: true,
+  },
+  node: {
+    __filename: true,
+  },
   module: {
+    parser: {
+      javascript: {
+        url: 'relative',
+      },
+    },
     rules: [
       {
         test: /\.js$/,
@@ -62,28 +92,23 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-            },
+            options: {},
           },
         ],
       },
       {
+        test: /luna-(console|notification|object-viewer)\/.+\.js/,
+        use: {
+          loader: path.resolve(__dirname, './loaders/cjs.js'),
+        },
+      },
+      {
         test: /\.scss$/,
-        use: [
-          cssMinifierLoader,
-          { loader: 'css-loader', options: { exportType: 'string' } },
-          postcssLoader,
-          'sass-loader',
-        ],
+        use: [cssMinifierLoader, cssLoader, postcssLoader, 'sass-loader'],
       },
       {
         test: /\.css$/,
-        use: [
-          cssMinifierLoader,
-          { loader: 'css-loader', options: { exportType: 'string' } },
-          postcssLoader,
-        ],
+        use: [cssMinifierLoader, cssLoader, postcssLoader],
       },
       // https://github.com/wycats/handlebars.js/issues/1134
       {
@@ -121,6 +146,7 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: `"${pkg.version}"`,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   experiments: {
     outputModule: true,

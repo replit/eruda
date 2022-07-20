@@ -1,6 +1,6 @@
 const cssMap = require('../../src/lib/cssMap')
-const escapeRegExp = require('licia/escapeRegExp')
-const each = require('licia/each')
+const escapeRegExp = require('regexp.escape')
+const each = require('lodash/forEach')
 
 module.exports = function (src) {
     each(cssMap, (val, key) => {

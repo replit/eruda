@@ -1,5 +1,4 @@
 import {
-  toStr,
   each,
   filter,
   isStr,
@@ -16,8 +15,20 @@ let scale = 1
 
 let curTheme = themes.Light
 
+function getStyleString(css) {
+  if (Array.isArray(css)) {
+    return css.map(getStyleString).join('\n')
+  } else if (isStr(css)) {
+    return css
+  } else if (typeof css.default === 'string') {
+    return css.default
+  } else {
+    throw new Error('Unknown style type')
+  }
+}
+
 const exports = function (css, container) {
-  css = toStr(css)
+  css = getStyleString(css) || ''
 
   for (let i = 0, len = styleList.length; i < len; i++) {
     if (styleList[i].css === css) return
@@ -26,7 +37,6 @@ const exports = function (css, container) {
   container = container || exports.container || document.head
   const el = document.createElement('style')
 
-  el.type = 'text/css'
   container.appendChild(el)
 
   const style = { css, el, container }
@@ -83,7 +93,7 @@ function resetStyle({ css, el }) {
       curTheme[key]
     )
   })
-  el.innerText = css
+  el.innerHTML = css
 }
 
 export default exports

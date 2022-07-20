@@ -4,12 +4,14 @@ import Settings from '../Settings/Settings'
 import { Emitter, nextTick, orientation } from '../lib/util'
 import { pxToNum } from '../lib/fione'
 import evalCss from '../lib/evalCss'
+import style from './EntryBtn.scss'
+import template from './EntryBtn.hbs'
 
 export default class EntryBtn extends Emitter {
   constructor($container) {
     super()
 
-    this._style = evalCss(require('./EntryBtn.scss'))
+    this._style = evalCss(style)
 
     this._$container = $container
     this._appendTpl()
@@ -64,7 +66,7 @@ export default class EntryBtn extends Emitter {
   _appendTpl() {
     const $container = this._$container
 
-    $container.append(require('./EntryBtn.hbs')())
+    $container.append(template())
     this._$el = $container.find('.eruda-entry-btn')
   }
   _resetPos(orientationChanged) {

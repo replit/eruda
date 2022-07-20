@@ -1,4 +1,4 @@
-const handlebars = require('handlebars/runtime')
+import handlebars from 'handlebars/lib/handlebars.runtime'
 
 // https://github.com/helpers/handlebars-helper-repeat
 handlebars.registerHelper('repeat', function (count = 0, options) {
@@ -46,4 +46,4 @@ handlebars.registerHelper('concat', function () {
   return ret
 })
 
-module.exports = handlebars
+export default handlebars

@@ -23,12 +23,14 @@ import { safeStorage } from '../lib/fione'
 import { isErudaEl } from '../lib/extraUtil'
 import evalCss from '../lib/evalCss'
 import chobitsu from 'chobitsu'
+import style from './Resources.scss'
+import template from './Resources.hbs'
 
 export default class Resources extends Tool {
   constructor() {
     super()
 
-    this._style = evalCss(require('./Resources.scss'))
+    this._style = evalCss(style)
 
     this.name = 'resources'
     this._localStoreData = []
@@ -43,7 +45,7 @@ export default class Resources extends Tool {
     this._iframeData = []
     this._imageData = []
     this._observeElement = true
-    this._tpl = require('./Resources.hbs')
+    this._tpl = template
   }
   init($el, container) {
     super.init($el)
