@@ -236,18 +236,47 @@ export default class Console extends Tool {
         logger.setOption('filter', new RegExp(escapeRegExp(lowerCase(filter))))
       })
 
+    Object.assign(globalThis, { textarea: $input[0] })
+
+    function execCode({ loseFocus } = {}) {
+      const jsInput = $input.val().trim()
+      if (jsInput === '') return
+
+      logger.evaluate(jsInput)
+      $input.val('')
+
+      if (loseFocus) {
+        $input.get(0).blur()
+        this._hideInput()
+      }
+    }
+
     $inputBtns
       .on('click', '.eruda-cancel', () => this._hideInput())
-      .on('click', '.eruda-execute', () => {
-        const jsInput = $input.val().trim()
-        if (jsInput === '') return
+      .on('click', '.eruda-execute', () => execCode({ loseFocus: true }))
 
-        logger.evaluate(jsInput)
-        $input.val('').get(0).blur()
-        this._hideInput()
-      })
+    $input.on(
+      'keypress',
+      (/** @type {{ origEvent: KeyboardEvent }} */ { origEvent: e }) => {
+        if (e.key === 'Enter') {
+          if (e.shiftKey) {
+            this._showInput()
+          } else if (!e.metaKey) {
+            execCode({ loseFocus: false })
+            e.preventDefault()
+          }
+        }
+      }
+    )
 
-    $input.on('focusin', () => this._showInput())
+    $input.on(
+      'keyup',
+      (/** @type {{ origEvent: KeyboardEvent }} */ { origEvent: e }) => {
+        if (e.key === 'Escape') {
+          this._hideInput()
+        }
+      }
+    )
 
     logger.on('insert', (log) => {
       const autoShow = log.type === 'error' && config.get('displayIfErr')

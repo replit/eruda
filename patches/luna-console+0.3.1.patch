@@ -1,5 +1,5 @@
 diff --git a/node_modules/luna-console/cjs/console/Log.js b/node_modules/luna-console/cjs/console/Log.js
-index 4c6835a..e16622e 100644
+index 4c6835a..1f2057d 100644
 --- a/node_modules/luna-console/cjs/console/Log.js
 +++ b/node_modules/luna-console/cjs/console/Log.js
 @@ -96,6 +96,7 @@ var linkify_1 = __importDefault(require("licia/linkify"));
@@ -10,7 +10,7 @@ index 4c6835a..e16622e 100644
  var regJsUrl = /https?:\/\/([0-9.\-A-Za-z]+)(?::(\d+))?\/[A-Z.a-z0-9/]*\.js/g;
  var emptyHighlightStyle = {
      comment: '',
-@@ -445,9 +446,27 @@ var Log = (function (_super) {
+@@ -445,9 +446,31 @@ var Log = (function (_super) {
          ret += "<div class=\"".concat(this.console.c('json hidden'), "\"></div>");
          return ret;
      };
@@ -29,13 +29,48 @@ index 4c6835a..e16622e 100644
 +            return "";
 +        }
 +
-+        return `<span style="float: right;">${stack[0].fileName}:${stack[0].lineNumber}</span>`;
++        return `<span style="float: right">${stack[0].fileName}:${stack[0].lineNumber}</span>`;
 +    }
 +
      Log.prototype.formatErr = function (err) {
          var lines = err.stack ? err.stack.split('\n') : [];
 -        var msg = "".concat(err.message || lines[0], "<br/>");
-+        var msg = "".concat(err.toString() || err.message || lines[0], formatLineNumberFromError(err), "<br/>");
++        var errMsg = err.toString() || err.message || lines[0];
++        if (lines.length > 1) {
++            errMsg = `<span style="cursor: pointer">${errMsg}</span>`
++        }
++        var msg = "".concat(errMsg, formatLineNumberFromError(err), "<br/>");
          lines = lines.map(function (val) { return (0, escape_1.default)(val); });
          var stack = "<div class=\"".concat(this.console.c('stack hidden'), "\">").concat(lines
              .slice(1)
+@@ -563,7 +586,7 @@ var Log = (function (_super) {
+         return args;
+     };
+     Log.prototype.formatJs = function (val) {
+-        return "<pre class=\"".concat(this.console.c('code'), "\">").concat(this.console.c((0, highlight_1.default)(val, 'js', emptyHighlightStyle)), "</pre>");
++        return "<pre class=\"".concat(this.console.c('code'), "\">").concat(this.console.c((0, highlight_1.default)(val, 'js', emptyHighlightStyle), false), "</pre>");
+     };
+     Log.prototype.formatFn = function (val) {
+         return "<pre style=\"display:inline\">".concat(this.formatJs(val.toString()), "</pre>");
+diff --git a/node_modules/luna-console/cjs/share/util.js b/node_modules/luna-console/cjs/share/util.js
+index 2bf94f0..8247c21 100644
+--- a/node_modules/luna-console/cjs/share/util.js
++++ b/node_modules/luna-console/cjs/share/util.js
+@@ -23,7 +23,7 @@ function classPrefix(name) {
+             return singleClass.replace(/[\w-]+/, function (match) { return "".concat(prefix).concat(match); });
+         }).join(' ');
+     }
+-    return function (str) {
++    return function (str, isClassName = true) {
+         if (/<[^>]*>/g.test(str)) {
+             try {
+                 var tree = html_1.default.parse(str);
+@@ -38,7 +38,7 @@ function classPrefix(name) {
+                 return processClass(str);
+             }
+         }
+-        return processClass(str);
++        return isClassName ? processClass(str) : str;
+     };
+ }
+ exports.classPrefix = classPrefix;
