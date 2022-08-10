@@ -42,9 +42,5 @@ module.exports = (src) => {
     .replace(/\nexports\.(\w+) = (.+)\.default;/g, '\nexport const $1 = $2;')
     .replace(/\nexports\.(\w+) = (.+);/g, '\nexport const $1 = $2;')
 
-  if (result.includes('var Log = ')) {
-    require('fs').writeFileSync('/Users/aet/Git/eruda-base/test.js', result)
-  }
-
   return result
 }
