@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <!--
+    A file for testing the Eruda setup locally. You'll probably want to start 
+    a web server so the file:/// constraints don't get in your way. Something 
+    like `python -m http.server 8000` in the root directory of this project
+    will work.
+  -->
+  <body>
+    <button onclick="console.error('Console error')">console.error</button>
+    <button onclick="throw new Error('Throw error')">throw new Error</button>
+    <script type="importmap">
+      {
+        "imports": {
+          "js-beautify": "https://esm.sh/js-beautify@1.14.4"
+        }
+      }
+    </script>
+    <div>
+      <h1>hello world</h1>
+    </div>
+    <style type="text/css">
+      div {
+        background-color: gray;
+      }
+    </style>
+    <script type="module">
+      import * as eruda from './dist/eruda.js'
+
+      Object.assign(globalThis, { eruda })
+      console.log(eruda)
+
+      eruda.default.init()
+      eruda.default.show()
+    </script>
+  </body>
+</html>
