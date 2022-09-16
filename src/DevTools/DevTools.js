@@ -94,7 +94,7 @@ export default class DevTools extends Emitter {
     tool.active = false
     this._tools[name] = tool
 
-    this._navBar.add(name)
+    this._navBar.add(name, tool.title || name)
 
     return this
   }

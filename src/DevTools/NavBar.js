@@ -2,6 +2,10 @@ import { Emitter, $, isNum } from '../lib/util'
 import evalCss from '../lib/evalCss'
 import style from './NavBar.scss'
 
+function getToolName($component) {
+  return $component.attr('data-name') || $component.text()
+}
+
 export default class NavBar extends Emitter {
   constructor($el) {
     super()
@@ -14,13 +18,13 @@ export default class NavBar extends Emitter {
 
     this._bindEvent()
   }
-  add(name) {
+  add(name, title = name) {
     const $el = this._$el
     this._len++
 
     const $last = $el.find('.eruda-nav-bar-item').last()
-    const html = `<div class="eruda-nav-bar-item">${name}</div>`
-    if ($last.length > 0 && $last.text() === 'settings') {
+    const html = `<div class="eruda-nav-bar-item" data-name="${name}">${title}</div>`
+    if ($last.length > 0 && getToolName($last) === 'settings') {
       $last.before(html)
     } else {
       $el.append(html)
@@ -31,7 +35,9 @@ export default class NavBar extends Emitter {
     this._len--
     this._$el.find('.eruda-nav-bar-item').each(function () {
       const $this = $(this)
-      if ($this.text().toLowerCase() === name.toLowerCase()) $this.remove()
+      if (getToolName($this).toLowerCase() === name.toLowerCase()) {
+        $this.remove()
+      }
     })
     this.resetBottomBar()
   }
@@ -41,7 +47,7 @@ export default class NavBar extends Emitter {
     this._$el.find('.eruda-nav-bar-item').each(function () {
       const $this = $(this)
 
-      if ($this.text() === name) {
+      if (getToolName($this) === name) {
         $this.addClass('eruda-active')
         self.resetBottomBar()
         self._scrollItemToView()
@@ -93,7 +99,7 @@ export default class NavBar extends Emitter {
 
     this._$el
       .on('click', '.eruda-nav-bar-item', function () {
-        self.emit('showTool', $(this).text())
+        self.emit('showTool', getToolName($(this)))
       })
       .on('scroll', () => this.resetBottomBar())
   }
