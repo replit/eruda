@@ -13,7 +13,6 @@ Console for Mobile Browsers.
 [![Test coverage][codecov-image]][codecov-url]
 [![Downloads][jsdelivr-image]][jsdelivr-url]
 [![License][license-image]][npm-url]
-[![Donate][donate-image]][paypal-url]
 
 </div>
 
@@ -27,7 +26,6 @@ Console for Mobile Browsers.
 [codecov-url]: https://codecov.io/github/liriliri/eruda?branch=master
 [license-image]: https://img.shields.io/npm/l/eruda?style=flat-square
 [donate-image]: https://img.shields.io/badge/$-donate-0070ba.svg?style=flat-square
-[paypal-url]: https://www.paypal.com/paypalme/surunzi
 
 <img src="https://eruda.liriliri.io/img/screenshot.jpg" style="width:100%">
 
@@ -129,6 +127,10 @@ If you want to create a plugin yourself, follow the guides [here](./doc/PLUGIN.m
 * [chobitsu](https://github.com/liriliri/chobitsu): Chrome devtools protocol JavaScript implementation.
 * [licia](https://github.com/liriliri/licia): Utility library used by eruda.
 * [eruda-webpack-plugin](https://github.com/huruji/eruda-webpack-plugin): Eruda webpack plugin.
+
+## Backers
+
+<a rel="noreferrer noopener" href="https://opencollective.com/eruda" target="_blank"><img src="https://opencollective.com/eruda/backers.svg?width=890"></a>
 
 ## Contribution
 

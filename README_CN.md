@@ -13,7 +13,6 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![Downloads][jsdelivr-image]][jsdelivr-url]
 [![License][license-image]][npm-url]
-[![Donate][donate-image]][paypal-url]
 
 </div>
 
@@ -27,7 +26,6 @@
 [codecov-url]: https://codecov.io/github/liriliri/eruda?branch=master
 [license-image]: https://img.shields.io/npm/l/eruda?style=flat-square
 [donate-image]: https://img.shields.io/badge/$-donate-0070ba.svg?style=flat-square
-[paypal-url]: https://www.paypal.com/paypalme/surunzi
 
 <img src="https://eruda.liriliri.io/img/screenshot.jpg" style="width:100%">
 
