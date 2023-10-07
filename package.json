@@ -81,7 +81,7 @@
   },
   "resolutions": {
     "licia": "npm:lodash.noop",
-    "postcss": "8.4.14"
+    "postcss": "8.4.31"
   },
   "dependencies": {
     "error-stack-parser": "^2.1.4",
