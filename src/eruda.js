@@ -170,11 +170,6 @@ export default {
       el.style.all = 'initial'
     }
 
-    // this needs to be done before creating shadow dom because the div is created outside of the
-    // shadow dom regardless. it needs to be early and low CSS precedence, so that the "all" can be
-    // overridden by later styles.
-    evalCss('.luna-dom-highlighter { all: initial }')
-
     let shadowRoot
     if (useShadowDom) {
       if (el.attachShadow) {
@@ -185,8 +180,7 @@ export default {
       if (shadowRoot) {
         // font-face doesn't work inside shadow dom.
         evalCss.container = document.head
-
-        evalCss([iconStyle, lunaConsoleStyle, lunaObjectViewerStyle])
+        evalCss(['.luna-dom-highlighter { all: initial }', iconStyle, lunaConsoleStyle, lunaObjectViewerStyle])
 
         el = document.createElement('div')
         shadowRoot.appendChild(el)
