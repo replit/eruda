@@ -170,6 +170,7 @@ export default {
       el.style.all = 'initial'
     }
 
+
     evalCss(['.luna-dom-highlighter { all: initial; }', '.luna-dom-highlighter * { background: initial; }'])
 
     let shadowRoot
