@@ -170,6 +170,9 @@ export default {
       el.style.all = 'initial'
     }
 
+
+    evalCss(['.luna-dom-highlighter { all: initial; }', '.luna-dom-highlighter * { background: initial; }'])
+
     let shadowRoot
     if (useShadowDom) {
       if (el.attachShadow) {
@@ -180,7 +183,7 @@ export default {
       if (shadowRoot) {
         // font-face doesn't work inside shadow dom.
         evalCss.container = document.head
-        evalCss(['.luna-dom-highlighter { all: initial }', iconStyle, lunaConsoleStyle, lunaObjectViewerStyle])
+        evalCss([iconStyle, lunaConsoleStyle, lunaObjectViewerStyle])
 
         el = document.createElement('div')
         shadowRoot.appendChild(el)
