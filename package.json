@@ -2,14 +2,14 @@
   "name": "eruda",
   "version": "2.5.0",
   "description": "Console for Mobile Browsers",
-  "main": "eruda.js",
-  "types": "types/index.d.ts",
+  "main": "dist/eruda.js",
+  "types": "eruda.d.ts",
   "browserslist": [
     "> 0.25%",
     "not dead"
   ],
   "scripts": {
-    "postinstall": "yarn install --dev > /dev/null && yarn patch-package",
+    "prepare": "patch-package",
     "ci": "npm run lint && npm run test && npm run build",
     "build": "rm -rf dist; NODE_ENV=production webpack --config build/webpack.prod.js",
     "watch": "rm -rf dist; NODE_ENV=development webpack --config build/webpack.prod.js --watch",
