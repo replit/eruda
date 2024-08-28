@@ -9,7 +9,7 @@
     "not dead"
   ],
   "scripts": {
-    "postinstall": "yarn patch-package",
+    "postinstall": "./node_modules/.bin/patch-package",
     "ci": "npm run lint && npm run test && npm run build",
     "build": "rm -rf dist; NODE_ENV=production webpack --config build/webpack.prod.js",
     "watch": "rm -rf dist; NODE_ENV=development webpack --config build/webpack.prod.js --watch",
