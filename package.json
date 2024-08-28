@@ -67,7 +67,6 @@
     "luna-console": "0.3.1",
     "luna-notification": "^0.1.4",
     "luna-object-viewer": "^0.2.1",
-    "patch-package": "^6.4.7",
     "postcss": "^8.4.14",
     "postcss-clean": "^1.2.2",
     "postcss-loader": "^7.0.1",
@@ -86,6 +85,7 @@
   "dependencies": {
     "error-stack-parser": "^2.1.4",
     "path-browserify": "^1.0.1",
+    "patch-package": "^6.4.7",
     "sass": "^1.53.0"
   },
   "eslintIgnore": [
